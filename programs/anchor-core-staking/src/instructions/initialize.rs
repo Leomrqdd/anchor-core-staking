@@ -38,8 +38,6 @@ pub struct Initialize<'info> {
     )]
     pub rewards_mint: InterfaceAccount<'info,Mint>,
     pub system_program: Program<'info, System>,
-    /// CHECK: this is this ID of the MPL Core Program and we check it
-    #[account(address = MPL_CORE_ID)]
     pub token_program:Interface<'info,TokenInterface>,
 }
 

@@ -5,6 +5,8 @@ use mpl_core::{
     accounts::BaseCollectionV1,
 };
 
+use crate::{error::ErrorCode};
+
 #[derive(Accounts)]
 
 pub struct MintAsset<'info> {
@@ -12,8 +14,10 @@ pub struct MintAsset<'info> {
     pub user: Signer<'info>,
     #[account(mut)]
     pub asset: Signer<'info>,
-    /// CHECK: this account is not initialized and is being used for signing purpose only, we verify that it derives from the correct seeds
-    #[account(mut)]
+    #[account(
+        mut,
+        has_one = update_authority @ErrorCode::InvalidUpdateAuthority,
+    )]
     pub collection: Account<'info, BaseCollectionV1>,
      /// CHECK: this account is not initialized and is being used for signing purpose only, we verify that it derives from the correct seeds
     #[account(

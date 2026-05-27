@@ -107,7 +107,7 @@ impl<'info> Stake<'info> {
             .plugin(Plugin::FreezeDelegate(FreezeDelegate {
                 frozen: true,
             }))
-            .invoke()?;
+            .invoke_signed(signer_seeds)?;
 
     
         let collection_info = self.collection.to_account_info();

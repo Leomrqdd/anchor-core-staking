@@ -86,9 +86,7 @@ impl<'info> ClaimRewards<'info> {
             else if attribute.key == "staked_at" {
                 staked_timestamp = attribute.value.parse::<i64>().map_err(|_| ErrorCode::InvalidTimestamp)?; 
                 staked_time = current_timestamp.checked_sub(staked_timestamp).ok_or(ErrorCode::InvalidTimestamp)?;
-                staked_time = staked_time.checked_div(SECONDS_PER_DAY).ok_or(ErrorCode::InvalidTimestamp)?;
-                require!(staked_time >= self.config.freeze_period as i64, ErrorCode::FreezePeriodNotElapsed);
-            }
+                staked_time = staked_time.checked_div(SECONDS_PER_DAY).ok_or(ErrorCode::InvalidTimestamp)?;            }
             else {
                 attributes_list.push(attribute.clone());
             }
