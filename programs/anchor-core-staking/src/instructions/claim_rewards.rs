@@ -142,6 +142,7 @@ impl<'info> ClaimRewards<'info> {
         UpdatePluginV1CpiBuilder::new(&self.mpl_core_program.to_account_info())
             .collection(Some(&self.collection.to_account_info()))
             .asset(&self.asset.to_account_info())
+            .payer(&self.owner.to_account_info())
             .authority(Some(&self.update_authority.to_account_info()))
             .system_program(&self.system_program.to_account_info())
             .plugin(Plugin::Attributes(Attributes { attribute_list: attributes_list }))

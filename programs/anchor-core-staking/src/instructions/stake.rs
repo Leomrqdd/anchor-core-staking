@@ -102,12 +102,12 @@ impl<'info> Stake<'info> {
             .collection(Some(&self.collection.to_account_info()))
             .asset(&self.asset.to_account_info())
             .payer(&self.owner.to_account_info())
-            .authority(Some(&self.update_authority.to_account_info()))
+            .authority(Some(&self.owner.to_account_info()))
             .system_program(&self.system_program.to_account_info())
             .plugin(Plugin::FreezeDelegate(FreezeDelegate {
                 frozen: true,
             }))
-            .invoke_signed(signer_seeds)?;
+            .invoke()?;
 
     
         let collection_info = self.collection.to_account_info();
@@ -136,6 +136,7 @@ impl<'info> Stake<'info> {
 
         UpdateCollectionPluginV1CpiBuilder::new(&self.mpl_core_program.to_account_info())
             .collection(&self.collection.to_account_info())
+            .payer(&self.owner.to_account_info())
             .authority(Some(&self.update_authority.to_account_info()))
             .system_program(&self.system_program.to_account_info())
             .plugin(Plugin::Attributes(Attributes { attribute_list: collection_attr_list }))
